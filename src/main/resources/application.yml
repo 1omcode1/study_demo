@@ -1,0 +1,17 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+
+# springMvc静态资源配置
+#spring:
+#  mvc:
+#    static-path-pattern: /res/**   #改变静态资源访问前缀
+
+
+elasticsearch:
+  data:
+    url: http://127.0.0.1:9200
+
