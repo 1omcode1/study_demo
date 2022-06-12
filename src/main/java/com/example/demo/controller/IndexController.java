@@ -22,7 +22,7 @@ public class IndexController {
         System.out.println(parameterMap);
         // 获取请求域中的参数
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("index");
         modelAndView.addObject( "key1","1");
         modelAndView.addObject("key2","2");
 

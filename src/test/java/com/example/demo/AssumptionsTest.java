@@ -1,3 +1,4 @@
+/*
 package com.example.demo;
 
 
@@ -27,4 +28,4 @@ public class AssumptionsTest {
                 () -> System.out.println("In DEV")
         );
     }
-}
+}*/

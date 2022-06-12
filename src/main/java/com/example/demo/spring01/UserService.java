@@ -1,5 +1,7 @@
 package com.example.demo.spring01;
 
+import org.springframework.stereotype.Service;
+
 public interface UserService {
 
     // 注册方法

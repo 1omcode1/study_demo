@@ -1,0 +1,955 @@
+<head th:replace="fragments/head"></head>
+<div id="humanMain" style="height: calc(100% - 10px); width: calc(100% - 10px); over-flow:auto;display:flex; ">
+  <!-- 人体图 -->
+  <div style="width: 66.6667%; display: block;">
+    <div id="human_figure">
+      <div id="front">
+        <!-- 头部 -->
+        <div id="head" style="display: none">
+          <div id="head-line" class="body-line"></div>
+          <div id="head-content" class="body-content"></div>
+        </div>
+        <!-- 颈部 -->
+        <div id="throat" style="display: none">
+          <div id="throat-line" class="body-line"></div>
+          <div id="throat-line-deg1"></div>
+          <!--<div id="throat-line-deg2"></div>-->
+          <div id="throat-content" class="body-content"></div>
+        </div>
+        <!-- 胸部 -->
+        <div id="chest" style="display: none">
+          <div id="chest-line" class="body-line"></div>
+          <div id="chest-content" class="body-content"></div>
+        </div>
+        <!-- 腹部 -->
+        <div id="belly" style="display: none">
+          <div id="belly-line" class="body-line"></div>
+          <div id="belly-line-deg1"></div>
+          <div id="belly-content" class="body-content"></div>
+        </div>
+        <!-- 生殖 -->
+        <div id="genitals" style="display: none">
+          <div id="genitals-line" class="body-line"></div>
+          <div id="genitals-line-deg1"></div>
+          <div id="genitals-content" class="body-content"></div>
+        </div>
+        <!-- 四肢 -->
+        <div id="limb" style="display: none">
+          <!--<div id="limb-line" class="body-line"></div> -->
+          <div id="limb-line-deg1"></div>
+          <!--<div id="limb-line-deg2"></div>-->
+          <div id="limb-line-deg3"></div>
+          <div id="limb-content" class="body-content"></div>
+        </div>
+        <!-- 全身 -->
+        <div id="allBody" style="display: none">
+          <div id="allBody-line" class="body-line"></div>
+          <div id="allBody-line-deg1"></div>
+          <div id="allBody-content" class="body-content"></div>
+        </div>
+        <!-- 综合 -->
+        <div id="synthesize" style="display: none">
+          <div id="synthesize-line" class="body-line"></div>
+          <div id="synthesize-content" class="body-content"></div>
+        </div>
+      </div>
+      <div id="back">
+
+      </div>
+    </div>
+  </div>
+  <!-- 右侧列表 -->
+  <div style="width: 33.333%;">
+    <div id="inspection_results">
+      <!-- 检查检验 -->
+      <div id="lisAndPacsRecord" class="leftList"></div>
+      <!-- 病史记录 -->
+      <div id="medicalRecord" class="leftList"></div>
+      <!-- 手术记录 -->
+      <div id="operationRecord" class="leftList"></div>
+    </div>
+  </div>
+</div>
+<script id="zhgl_lispacs_list" type="text/html">
+  <div class="list-name">检查检验</div>
+  {{# if(d && d.length > 0){ }}
+  {{# for(var i = 0, len = d.length; i < len; i++){ }}
+  <div  class="list-div">
+    <div  class="list-icd" style="width: calc(100% - 100px);">
+      <div style="float: left;">
+        <img src="/PHApiServer/resources/images/record/lisAndPacs.png" height="30" width="30"/>
+      </div>
+      <div class="list-icd-name">
+        <a href="javascript:;" class="link-style">
+          <span onclick="lisAndPacsClick(this)" data-json="{{= JSON.stringify(d[i])}}" style="color: black">{{d[i].NAME ? d[i].NAME : ''}}</span>
+        </a>
+      </div>
+      <div style="float: left;margin-left: 10px;position: relative;top:4px"><span>{{d[i].RECORD_DATE}}</span></div>
+    </div>
+    <div class="list-doctor" style="">
+      {{# if(d[i].DOCTOR_NAME){ }}
+      <div style="float: right">
+        <span>{{d[i].DOCTOR_NAME}}</span>
+      </div>
+      <div style="float: right; margin-top: 5px; margin-right: 5px;height: 40px;">
+        <img src="/PHApiServer/resources/images/record/doctor-male.png" />
+      </div>
+      {{# } }}
+    </div>
+  </div>
+  <hr class="hr-style"/>
+  {{# } }}
+  {{# } else { }}
+  <div class="list-div" style="text-align:center;line-height: 62px;">
+    <span>暂无数据</span>
+    <hr class="hr-style"/>
+  </div>
+  {{# } }}
+</script>
+<script id="zhgl_operation_list" type="text/html">
+  <div class="list-name">手术记录</div>
+  {{# if(d && d.length > 0){ }}
+  {{# for(var i = 0, len = d.length; i < len; i++){ }}
+  <div  class="list-div">
+    <div  class="list-icd">
+      <div style="float: left;">
+        <img src="/PHApiServer/resources/images/record/history.png" height="30" width="30"/>
+      </div>
+      <div class="list-icd-name">
+        <a href="javascript:;"  class="link-style" >
+          <span onclick="operationClick(this)" data-json="{{= JSON.stringify(d[i])}}" style="color: black">{{d[i].OPERATION_ITEM_NAME ? d[i].OPERATION_ITEM_NAME : ''}}</span>
+        </a>
+      </div>
+      <div style="float: left;margin-left: 10px;position: relative;top:4px">
+        <span>{{d[i].OPERATION_DATE}}</span>
+      </div>
+    </div>
+    <div class="list-doctor">
+      {{# if(d[i].DOCTOR_NAME){ }}
+      <div style="float: right">
+        <span>{{d[i].DOCTOR_NAME}}</span>
+      </div>
+      <div style="float: right; margin-top: 5px; margin-right: 5px;height: 40px;">
+        <img src="/PHApiServer/resources/images/record/doctor-male.png" />
+      </div>
+      {{# } }}
+    </div>
+  </div>
+  <hr class="hr-style"/>
+  {{# } }}
+  {{# } else { }}
+  <div class="list-div" style="text-align:center;line-height: 62px;">
+    <span>暂无数据</span>
+    <hr class="hr-style"/>
+  </div>
+  {{# } }}
+</script>
+<script id="zhgl_medical_list" type="text/html">
+  <div class="list-name">病史记录</div>
+  {{# if(d && d.length > 0){ }}
+  {{# for(var i = 0, len = d.length; i < len; i++){ }}
+  <div class="list-div">
+    <div class="list-icd">
+      <div style="float: left;">
+        <img src="/PHApiServer/resources/images/record/operation.png" height="30" width="30"/>
+      </div>
+      <div class="list-icd-name">
+        <a href="javascript:;"  class="link-style" >
+          <span onclick="medicalClick(this)" data-json="{{= JSON.stringify(d[i])}}" style="color: black">{{d[i].ICD_NAME ? d[i].ICD_NAME : ''}}</span>
+        </a>
+      </div>
+      <div style="float: left;margin-left: 10px;position: relative;top:4px">
+        <span>{{d[i].VISIT_TIME_CHAR}}</span>
+      </div>
+    </div>
+    <div class="list-doctor">
+      {{# if(d[i].DOCTOR_NAME){ }}
+      <div style="float: right">
+        <span>{{d[i].DOCTOR_NAME}}</span>
+      </div>
+      <div style="float: right; margin-top: 5px; margin-right: 5px;height: 40px;">
+        <img src="/PHApiServer/resources/images/record/doctor-male.png" />
+      </div>
+      {{# } }}
+    </div>
+  </div>
+  <hr class="hr-style"/>
+  {{# } }}
+  {{# } else { }}
+  <div class="list-div" style="text-align:center;line-height: 62px;">
+    <span>暂无数据</span>
+    <hr class="hr-style"/>
+  </div>
+  {{# } }}
+</script>
+<script id="human_list_left" type="text/html">
+  {{# for(var i = 0, len = d.length; i < len; i++){ }}
+  <div class="human-div">
+    <div>
+      <div class="circular-num">
+        <span style="position: relative;left: -0.3px;">{{i + 1}}</span>
+      </div>
+      <a href="javascript:;" class="link-style" >
+        <span onclick="humanClick(this)" style="color: #333333" data-json="{{= JSON.stringify(d[i])}}">{{ d[i].ICD_NAME ? d[i].ICD_NAME : ''}}</span>
+      </a>
+    </div>
+    <div>
+      <span style="color: #888888">{{ d[i].CREATE_TIME }}</span>
+    </div>
+  </div>
+  {{# } }}
+</script>
+<script id="human_list_right" type="text/html">
+  {{# for(var i = 0, len = d.length; i < len; i++){ }}
+  <div class="human-div">
+    <div>
+      <div style="display: inline-block">
+        <a href="javascript:;" class="link-style" >
+          <div class="circular-num">
+            <span style="position: relative;top: -1px;left: -0.3px;">{{i + 1}}</span>
+          </div>
+          <span onclick="humanClick(this)" style="color: #333333" data-json="{{= JSON.stringify(d[i])}}">{{ d[i].ICD_NAME ? d[i].ICD_NAME : '' }}</span>
+        </a>
+      </div>
+
+    </div>
+    <div>
+      <span style="color: #888888">{{ d[i].CREATE_TIME }}</span>
+    </div>
+  </div>
+  {{# } }}
+</script>
+<script th:inline="none">
+  function humanClick(param) {
+    var data = JSON.parse($(param).attr("data-json"))
+    if (data) {
+      var flag = data.FLAG;
+      var label_id = '';
+      var visitId = data.VISIT_ID;
+      if (flag == '1') {
+        label_id = 'outpatientMedicalRecords';
+      }
+      else if (flag == '2') {
+        label_id = 'diagnosisRecord';
+      }
+      else if (flag == '3') {
+        label_id = 'diagnosisRecord';
+      }
+    }
+    $('#indexRoot').attr('label_id', label_id);
+    //$('#indexRoot').attr('operationApplicationNo', row.APPLICATION_NO);
+    homeIndex.selectTimeCard(visitId)
+    //console.log(data)
+  }
+  function lisAndPacsClick(param) {
+    var data = JSON.parse($(param).attr("data-json"))
+    //console.log(data.VISIT_ID)
+    if (data) {
+      var flag = data.REPORT_FLAG;
+      var visitId = data.VISIT_ID;
+      if (flag === 1) {
+        //var $viewLabelRoot = $('#viewLabelRoot');
+        //var $panel = $viewLabelRoot.tabs('getTab','检验报告');
+        //$viewLabelRoot.tabs('select', '检验报告');
+        $('#indexRoot').attr('label_id', 'lisReport');
+        homeIndex.selectTimeCard(visitId)
+      } else if (flag === 2) {
+        $('#indexRoot').attr('label_id', 'pacsReport');
+        homeIndex.selectTimeCard(visitId)
+      } else if (flag === 3) {
+        $('#indexRoot').attr('label_id', 'pathReport');
+        homeIndex.selectTimeCard(visitId)
+      }
+    }
+  }
+  function operationClick (param) {
+    var data = JSON.parse($(param).attr("data-json"))
+    if (data) {
+      var visitId = data.VISIT_ID;
+      $('#indexRoot').attr('label_id', 'operation');
+      $('#indexRoot').attr('operationApplicationNo', data.ID);
+      homeIndex.selectTimeCard(visitId)
+    }
+  }
+  function medicalClick (param) {
+    var data = JSON.parse($(param).attr("data-json"))
+    if (data) {
+      var visitId = data.VISIT_ID;
+      $('#indexRoot').attr('label_id', 'outpatientMedicalRecords');
+      homeIndex.selectTimeCard(visitId)
+    }
+  }
+  (function () {
+    function GeneralView() {
+    }
+
+    function getRightData(empi) {
+      var allReportList = [];
+      var allOperationList = [];
+      var allEmrOutpatient = [];
+      Promise.all([
+        //根据EMPI获取全部检查检验
+        new Promise(function (resolve,reject){
+          xhr.dynamicApi("/allReportByEmpi/get.do", {empi : empi})
+                  .then(res => {
+                    if (res.code === 200) {
+                      allReportList = res.data;
+                    }
+                    resolve(res)
+                  })
+        }),
+        // 根据EMPI获取全部手术记录
+        new Promise(function (resolve,reject){
+          xhr.dynamicApi("/allOperationByEmpi/get.do", {empi : empi})
+                  .then(res =>{
+                    if (res.code === 200) {
+                      allOperationList = res.data;
+                    }
+                    resolve(res)
+                  })
+        }),
+        // 根据EMPI获取全部门诊病历
+        new Promise(function (resolve,reject){
+          xhr.dynamicApi("/allEmrOutpatientByEmpi/get.do", {empi: empi})
+                  .then(res => {
+                    if (res.code === 200) {
+                      allEmrOutpatient = res.data;
+                    }
+                    resolve(res)
+                  })
+        })]
+      ).then(function (res){
+        var lispacs_list = document.getElementById('zhgl_lispacs_list').innerHTML; //读取模版
+        // 方式一：异步渲染（推荐）
+        laytpl(lispacs_list).render(allReportList, function(render){
+          document.getElementById('lisAndPacsRecord').innerHTML = render;
+          $.parser.parse('#lisAndPacsRecord');
+        });
+        var operation_list = document.getElementById('zhgl_operation_list').innerHTML; //读取模版
+        // //方式一：异步渲染（推荐）
+        laytpl(operation_list).render(allOperationList, function(render){
+          document.getElementById('operationRecord').innerHTML = render;
+          $.parser.parse('#operationRecord');
+        });
+        var medical_list = document.getElementById('zhgl_medical_list').innerHTML; //读取模版
+        //方式一：异步渲染（推荐）
+        laytpl(medical_list).render(allEmrOutpatient, function (render) {
+          document.getElementById('medicalRecord').innerHTML = render;
+          $.parser.parse('#medicalRecord');
+        });
+      })
+    }
+    GeneralView.prototype.init = function () {
+      $('#humanMain').loading('数据加载中', 1);
+      var visitId = $('#indexRoot').attr('visit_id');
+      var empi = $('#indexRoot').attr('empi');
+      var sex = $('#indexRoot').attr('sex_id');
+      //alert(sex)
+      if (sex === '2') {
+        $("#human_figure").css("background","url(/PHApiServer/resources/images/organ/women-front.png) no-repeat 50% ")
+      } else{
+        $("#human_figure").css("background","url(/PHApiServer/resources/images/organ/man-front.png) no-repeat 50% ")
+      }
+      // 获取右侧数据
+      getRightData(empi)
+
+      // 获取人体机构分类，从数据库中获取
+      var headList = [];         // 头部
+      var neckList = [];         // 颈部
+      var chestList = [];        // 胸部
+      var conjunctionList = [];  // 综合
+      var bellyList = [];        // 腹部
+      var genitalsList = [];     // 生殖
+      var limbList = [];         // 四肢
+      var allBodyList = [];      // 全身
+      xhr.dynamicApi("/bodyParts/get.do", {})
+              .then(res => {
+                if (res.code === 200) {
+                  var bodyParts = res.data;
+                  xhr.dynamicApi("/allDiagnosis/get.do", {empi : empi})
+                          .then(res => {
+                            if (res.code === 200) {
+                              var allBodyData = res.data;
+                              // 数据去重
+                              allBodyData = uniqueArray(allBodyData, 'ICD_ID');
+                              console.log("全部数据")
+                              console.log(allBodyData)
+                              console.log("bodyParts数据")
+                              console.log(bodyParts)
+                              // 处理数据
+                              for (var m = 0; m < allBodyData.length; m++) {
+                                this.isShow = true;
+                                for (var n = 0; n < bodyParts.length; n++) {
+                                  if (allBodyData[m].DEPT_ID === bodyParts[n].DEPT_ID) {
+                                    if (bodyParts[n].CATEGORY_ID === 'head') {
+                                      headList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'neck') {
+                                      neckList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'chest') {
+                                      chestList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'conjunction') {
+                                      console.log(allBodyData[m])
+                                      conjunctionList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'belly') {
+                                      bellyList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'genitals') {
+                                      genitalsList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'limb') {
+                                      limbList.push(allBodyData[m]);
+                                    }
+                                    else if (bodyParts[n].CATEGORY_ID === 'allBody') {
+                                      allBodyList.push(allBodyData[m]);
+                                    }
+                                  }
+                                }
+                              }
+                              var human_list_right = document.getElementById('human_list_right').innerHTML; //读取模版
+                              var human_list_left = document.getElementById('human_list_left').innerHTML; //读取模版
+                              if (headList && headList.length > 0) {
+                                $("#head").css("display","block")
+
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_left).render(headList, function(render){
+                                  document.getElementById('head-content').innerHTML = render;
+                                  $.parser.parse('#head-content');
+                                });
+                              }
+                              if (neckList && neckList.length > 0) {
+                                $("#throat").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_right).render(neckList, function(render){
+                                  document.getElementById('throat-content').innerHTML = render;
+                                  $.parser.parse('#throat-content');
+                                });
+                              }
+                              if (chestList && chestList.length > 0) {
+                                $("#chest").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_left).render(chestList, function (render) {
+                                  document.getElementById('chest-content').innerHTML = render;
+                                  $.parser.parse('#chest-content');
+                                });
+                              }
+                              if (conjunctionList && conjunctionList.length > 0) {
+                                $("#synthesize").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_right).render(conjunctionList, function (render) {
+                                  document.getElementById('synthesize-content').innerHTML = render;
+                                  $.parser.parse('#synthesize-content');
+                                });
+                              }
+                              if (bellyList && bellyList.length > 0) {
+                                $("#belly").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_right).render(bellyList, function (render) {
+                                  document.getElementById('belly-content').innerHTML = render;
+                                  $.parser.parse('#belly-content');
+                                });
+                              }
+                              if (genitalsList && genitalsList.length > 0) {
+                                $("#genitals").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_right).render(genitalsList, function (render) {
+                                  document.getElementById('genitals-content').innerHTML = render;
+                                  $.parser.parse('#genitals-content');
+                                });
+                              }
+                              if (limbList && limbList.length > 0) {
+                                $("#limb").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_left).render(limbList, function (render) {
+                                  document.getElementById('limb-content').innerHTML = render;
+                                  $.parser.parse('#limb-content');
+                                });
+                              }
+                              console.log("全身数据")
+                              console.log(allBodyList)
+                              if (allBodyList && allBodyList.length > 0) {
+                                $("#allBody").css("display","block")
+                                // 方式一：异步渲染（推荐）
+                                laytpl(human_list_left).render(allBodyList, function (render) {
+                                  document.getElementById('allBody-content').innerHTML = render;
+                                  $.parser.parse('#allBody-content');
+                                });
+                              }
+                            }
+                          })
+                } else {
+                  // this.$Message.warning('未查询到诊断数据');
+                  console.error(res.message)
+                }
+              })
+              .finally(function(){
+                $('#humanMain').closeLoading();
+              })
+    }
+    // JSON 数组去重
+    function uniqueArray(array, key) {
+      var result = [array[0]];
+      for (var i = 1; i < array.length; i++) {
+        var item = array[i];
+        var repeat = false;
+        for (var j = 0; j < result.length; j++) {
+          if (item[key] == result[j][key]) {
+            repeat = true;
+            break;
+          }
+        }
+        if (!repeat) {
+          result.push(item);
+        }
+      }
+      return result;
+    }
+
+    window.generalView = new GeneralView()
+    generalView.init()
+  })()
+</script>
+<style>
+  #human_figure {
+    float: left;
+    /*border: 1px solid black;*/
+    position: relative;
+    width: 1100px;
+    height: 780px;
+    z-index: 1;
+    background: url(/PHApiServer/resources/images/organ/man-front.png) no-repeat 50%;
+  }
+
+  #inspection_results {
+    float: left;
+    /*border: 1px solid black;*/
+    width: 100%;
+    height: 780px;
+    margin-left: 10px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .body-line {
+    height: 0px;
+    border: 1px solid #aaa;
+    position: absolute;
+    transform: rotate(0deg);
+  }
+
+  .body-content {
+    position: absolute;
+    padding-right: 8px;
+    width: 200px;
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 110px;
+
+    /*border: 1px solid black;*/
+  }
+
+  #head-line {
+    width: 150px;
+    top: calc(8% - 11px);
+    left: calc(50% + 8px);
+    background-color: #aaaaaa;
+  }
+
+  #head-content {
+    text-align: left;
+    top: calc(4%);
+    left: calc(65% + 5px);;
+    z-index: 999;
+    /*direction: rtl;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #head-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #head-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #head-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #throat-line {
+    width: 124px;
+    top: calc(8% - 4px);
+    left: calc(30% + 1px);
+    background-color: #aaaaaa;
+  }
+
+  #throat-line-deg1 {
+    width: 65px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(11% - 4px);
+    left: calc(41% - 4px);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #aaaaaa;
+  }
+
+  #throat-line-deg2 {
+    width: 72px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(11% - 0px);
+    left: calc(41% - 4px);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #aaaaaa;
+  }
+
+  #throat-content {
+    text-align: right;
+    width: 200px;
+    top: calc(5% - 0px);
+    left: calc(11% + 2px);
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #throat-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #throat-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #throat-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #chest-line {
+    width: 158px;
+    position: absolute;
+    top: calc(22% - 0px);
+    left: calc(50%);
+    background-color: #aaaaaa;
+  }
+
+  #chest-content {
+    text-align: left;
+    top: calc(20% - 0px);
+    left: calc(65% + 5px);
+    z-index: 999;
+    /*direction: rtl;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #chest-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #chest-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #chest-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #belly-line {
+    width: 137px;
+    position: absolute;
+    top: calc(37% - 2px);
+    left: calc(35% - 2px);
+    background-color: #aaaaaa;
+  }
+
+  #belly-line-deg1 {
+    width: 70px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(41% - 7px);
+    left: calc(29% + 3px);
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    background-color: #aaaaaa;
+  }
+
+  #belly-content {
+    text-align: right;
+    width: 200px;
+    top: calc(43% + 0px);
+    left: calc(11% + 3px);
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #belly-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #belly-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #belly-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #genitals-line {
+    width: 25px;
+    position: absolute;
+    top: calc(65% - 17px);
+    left: calc(30% + 0px);
+    background-color: #aaaaaa;
+  }
+
+  #genitals-line-deg1 {
+    width: 185px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(53%);
+    left: calc(29% - 2px);
+    -webkit-transform: rotate(125deg);
+    transform: rotate(125deg);
+    background-color: #aaaaaa;
+  }
+
+  #genitals-content {
+    text-align: right;
+    width: 200px;
+    top: calc(62% - 9px);
+    left: calc(10% + 10px);
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #genitals-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #genitals-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #genitals-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #limb-line {
+    width: 100px;
+    top: calc(55% - 4px);
+    left: 54%;
+    background-color: #aaaaaa;
+  }
+
+  #limb-line-deg1 {
+    width: 60px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(55% - 15px);
+    left: calc(53% - 6px);
+    -webkit-transform: rotate(62deg);
+    transform: rotate(62deg);
+    background-color: #aaaaaa;
+  }
+
+  #limb-line-deg2 {
+    width: 99px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(51% - 6px);
+    left: calc(61% - 16px);
+    -webkit-transform: rotate(56deg);
+    transform: rotate(56deg);
+    background-color: #aaaaaa;
+  }
+
+  #limb-line-deg3 {
+    width: 85px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(57% - 3px);
+    left: calc(57% - 5px);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    background-color: #aaaaaa;
+  }
+
+  #limb-content {
+    text-align: left;
+    top: calc(56% - 13px);
+    left: calc(66% - 6px);
+    z-index: 999;
+    /*direction: rtl;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #limb-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #limb-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #limb-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #allBody-line {
+    width: 28px;
+    position: absolute;
+    top: calc(39% - 5px);
+    left: calc(63% - 5px);
+    -webkit-transform: rotate(62deg);
+    transform: rotate(62deg);
+    background-color: #aaaaaa;
+  }
+
+  #allBody-line-deg1 {
+    width: 110px;
+    height: 0px;
+    border: 1px solid #aaaaaa;
+    position: absolute;
+    top: calc(37% - 2px);
+    left: calc(55% - 20px);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    background-color: #aaaaaa;
+  }
+
+  #allBody-content {
+    text-align: left;
+    width: 200px;
+    top: calc(38% - 5px);
+    left: calc(66% - 6px);
+    z-index: 999;
+    /*direction: rtl;*/
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+  }
+
+  #allBody-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #allBody-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #allBody-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  #synthesize-line {
+    width: 190px;
+    position: absolute;
+    top: calc(26% - 4px);
+    left: calc(30%);
+  }
+
+  #synthesize-content {
+    text-align: right;
+    width: 200px;
+    top: calc(24% - 0px);
+    left: calc(11% - 0px);
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #synthesize-content::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+  }
+
+  #synthesize-content::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #EDEDED;
+  }
+
+  #synthesize-content::-webkit-scrollbar-track { /*滚动条里面轨道*/
+    border-radius: 10px;
+  }
+
+  .leftList {
+    min-height: 80px;
+  }
+  .list-name {
+    margin-top: 20px;
+    color: #333333;
+  }
+  .list-div{
+    height: 62px;
+    font-size: 12px;
+  }
+  .list-icd{
+    float: left;
+    margin-top: 15px;
+    /*margin-left: 20px;*/
+  }
+  .list-icd-name{
+    float: left;
+    margin-left: 10px;
+    width: 70%;
+    margin-top: -5px;
+    position: relative;
+    top: 3px;
+  }
+  .list-doctor{
+    float: right;
+    line-height: 62px;
+    margin-right: 20px;
+  }
+  .hr-style{
+    height: 1px;
+    background-color: #e2e2e2;
+  }
+  .human-div{
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .circular-num{
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background-color: #666666;
+    font-size: 10px;
+    color: #ffffff;
+    line-height: 14px;
+    text-align: center;
+    display: inline-block;
+  }
+</style>

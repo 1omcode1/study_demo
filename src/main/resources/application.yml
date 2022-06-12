@@ -15,3 +15,39 @@ elasticsearch:
   data:
     url: http://127.0.0.1:9200
 
+
+
+# rabbitmq配置
+spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/cloud_user?useSSL=false
+#    username: root
+#    password: 123456
+#    driver-class-name: com.mysql.jdbc.Driver
+  application:
+    name: springboot_rabbitmq
+  rabbitmq:
+    host: 192.168.190.128
+    port: 5672
+    username: ems
+    password: 123456
+    virtual-host: ems  #这里是ems,不是/ems,加了斜杠后疯狂报错，因为虚拟机名称错误，找不到
+  # 邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 839721427@qq.com
+    password: coiqtfjjoyxabcbf
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+test:
+  enabled: false
+
+
+

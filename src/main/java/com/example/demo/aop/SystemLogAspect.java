@@ -26,6 +26,7 @@ import java.util.Map;
  * 日志管理
  *//*
 
+
 @Aspect
 @Component
 @Slf4j
@@ -36,22 +37,24 @@ public class SystemLogAspect {
     @Autowired(required = false)
     private HttpServletRequest request;
 
-    */
+*/
 /**
      * Controller层切点,注解方式
      *//*
+
 
     @Pointcut("@annotation(com.example.demo.annotation.SystemLog)")
     public void controllerAspect() {
 
     }
 
-    */
+*/
 /**
      * 前置通知 (在方法执行之前返回)用于拦截Controller层记录用户的操作的开始时间
      * @param joinPoint 切点
      * @throws InterruptedException
-     *//*
+   *//*
+
 
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) throws InterruptedException{
@@ -62,11 +65,14 @@ public class SystemLogAspect {
     }
 
 
-    */
-/**
+*/
+/*
+*
      * 后置通知(在方法执行之后并返回数据) 用于拦截Controller层无异常的操作
      * @param joinPoint 切点
-     *//*
+
+*//*
+
 
     @AfterReturning("controllerAspect()")
     public void after(JoinPoint joinPoint){
@@ -101,10 +107,11 @@ public class SystemLogAspect {
         }
     }
 
-    */
+*/
 /**
      * 保存日志至ES
      *//*
+
 
     private static class SaveEsSystemLogThread implements Runnable {
 
@@ -123,13 +130,14 @@ public class SystemLogAspect {
         }
     }
 
-    */
+*/
 /**
      * 获取注解中对方法的描述信息 用于Controller层注解
      * @param joinPoint 切点
      * @return 方法描述
-     * @throws Exception
-     *//*
+     * @throws Exception*//*
+
+
 
     public static Map<String, Object> getControllerMethodInfo(JoinPoint joinPoint) throws Exception{
 

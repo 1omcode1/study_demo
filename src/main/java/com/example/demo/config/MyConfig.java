@@ -14,13 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
  *        那这样如果多调用几次use01方法生成的值，是相等还是不等？
  *   答案：可以调用，并且获取到的值相等。因为外无论对配置类中的这个组件注册方法调用多少次获取的都是之前注册容器中的单实例对象
  */
-@Configuration
+//@Configuration
 public class MyConfig {
 
-    @Bean // 给容器中添加组件user01。以方法名作为组件的id。返回类型就是组件类型，返回的值，就是组件在容器中的实例
+/*    @Bean // 给容器中添加组件user01。以方法名作为组件的id。返回类型就是组件类型，返回的值，就是组件在容器中的实例
 //    @Bean("userName")  // 也可以在bean注解上对这个组件重命名
     public User user01(){
         return new User("张三",18);
-    }
+    }*/
 
 }

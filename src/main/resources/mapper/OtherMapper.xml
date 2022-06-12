@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OtherMapper">
+
+    <select id="getAllTables" resultType="java.lang.String">
+        select TABLE_NAME from dba_tables where TABLESPACE_NAME=#{tableSpaceName} AND TABLE_NAME LIKE 'HB%' ORDER BY TABLE_NAME
+    </select>
+    <select id="getAllColumns" resultType="com.alibaba.fastjson.JSONObject">
+        select TABLE_NAME, COLUMN_NAME,DATA_TYPE,DATA_LENGTH from user_tab_cols where TABLE_NAME = #{tableName}
+    </select>
+</mapper>

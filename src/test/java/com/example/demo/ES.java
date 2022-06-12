@@ -1,3 +1,4 @@
+/*
 package com.example.demo;
 
 import org.apache.lucene.search.TotalHits;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @SpringBootTest
-class DemoApplicationTests {
+class ES {
 
 
     @Autowired
@@ -28,9 +29,11 @@ class DemoApplicationTests {
     void contextLoads() {
     }
 
-    /**
+    */
+/**
      * 1.matchAll
-     */
+     *//*
+
     @Test
     void test01() throws IOException {
 
@@ -76,10 +79,12 @@ class DemoApplicationTests {
 
     }
 
-    /**
+    */
+/**
      * match词条查询
      * @throws IOException
-     */
+     *//*
+
     @Test
     void test02() throws IOException {
         //构建查询请求对象，指定查询的索引名称
@@ -95,8 +100,9 @@ class DemoApplicationTests {
         //如果取交集，则会得到按照三个字分别查询出结果的相同值
         matchQueryBuilder.operator(Operator.AND);
 
-       /* //如果是“华为”，则查询出的结果只有一个，因为es中符合“华”、“为”的只有一个
-        MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("title", "华为");*/
+       */
+/* //如果是“华为”，则查询出的结果只有一个，因为es中符合“华”、“为”的只有一个
+        MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("title", "华为");*//*
 
 
         //指定查询条件和分页条件
@@ -121,7 +127,6 @@ class DemoApplicationTests {
             //获取hit详细数据-JSON字符串类型
             String sourceAsString = searchHit.getSourceAsString();
             //System.out.println("sourceAsString："+sourceAsString);
-
             //获取hit详细数据-JSON类型
             Map<String, Object> sourceAsMap = searchHit.getSourceAsMap();
             System.out.println("sourceAsMap："+sourceAsMap);
@@ -131,3 +136,4 @@ class DemoApplicationTests {
 
 
 }
+*/
